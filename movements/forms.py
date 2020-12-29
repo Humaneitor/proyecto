@@ -1,15 +1,20 @@
 
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, DateField, StringField, FloatField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms import DateField, StringField, FloatField, SubmitField, SelectField
+from wtforms.validators import DataRequired
 
 
 
 class MovementForm(FlaskForm):
 
-    tipo = StringField('Tipo')
-    fecha = DateField('Fecha', validators=[DataRequired()])
-    concepto = StringField('Concepto', validators=[DataRequired(), Length(min=5, message="El concepto debe tener más de 5 caracteres")])
-    cantidad = FloatField('Cantidad', validators=[DataRequired()])
+    date = DateField('Fecha', validators=[DataRequired()])
+    time = DateField('Hora', validators=[DataRequired()])
+
+    #from_currency = StringField('From_Currency', validators=[DataRequired()])
+    from_currency = SelectField('Moneda origen', choices=('EUR', 'ETH', 'LTC', 'BNB', 'EOS', 'XLM', 'TRX', 'BTC', 'XRP', 'BCH', 'USDT', 'BSV', 'ADA'), validators=[DataRequired()])
+    from_quantity = FloatField('Cantidad de moneda de origen', validators=[DataRequired()])
+
+    to_currency = SelectField('Moneda origen', choices=('EUR', 'ETH', 'LTC', 'BNB', 'EOS', 'XLM', 'TRX', 'BTC', 'XRP', 'BCH', 'USDT', 'BSV', 'ADA'), validators=[DataRequired()])
+    to_quantity = FloatField('Cantidad de moneda de destino', validators=[DataRequired()])
 
     submit = SubmitField('Aceptar')

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} Simulador de Criptomoneda - Compra de criptomoneda {% endblock %}
+
+{% block contenido %}
+    <h1>Compra de Criptomoneda</h1>
+
+    <div class="field">
+        {{ form.from_currency.label }}
+        {{ form.from_currency() }}
+        
+    </div>
+
+    <div class="field">
+        {{ form.from_quantity.label }}
+        {{ form.from_quantity(placeholder="Escribe una cantidad") }}
+
+        {% for msg in form.from_quantity.errors %}
+        <p class="err.msg">
+            {{ msg }}
+        </p>
+    {% endfor %}
+    </div>
+
+    <div class="field">
+        {{ form.to_currency.label }}
+        {{ form.to_currency() }}
+    </div>
+
+    <div class="field">
+        {{ form.to_quantity.label }}
+        {{ form.to_quantity(placeholder="Escribe una cantidad") }}
+
+        {% for msg in form.to_quantity.errors %}
+        <p class="err.msg">
+            {{ msg }}
+        </p>
+    {% endfor %}
+    </div>
+
+
+    <div class="field">
+        {{ form.submit }}
+    </div>  
+</form>
+{%  endblock %}

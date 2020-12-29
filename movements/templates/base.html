@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css')}}">
+    </head>
+    <body>
+        <header>
+            <p>myCrypto</p>
+        </header>
+
+        <section>
+            {% block contenido %}{% endblock %}
+        </section>
+
+        <footer>
+            &copy; 2020 - 2021. Todos los derechos reservados<br>
+            Simulación ficticia, esta página no se hará cargo de los problemas ocacionados por su uso.<br>
+            Simulador creado como proyecto final del Bootcamp Aprende a Programar desde Cero de <a href="https://keepcoding.io/" target="_blank">KeepCoding</a>.
+        </footer>
+    </body>
+</html>

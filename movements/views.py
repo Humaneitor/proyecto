@@ -6,17 +6,11 @@ import sqlite3
 from datetime import date
 
 DBFILE = app.config['DBFILE']
+monedas = ('EUR', 'ETH', 'LTC', 'BNB', 'EOS', 'XLM', 'TRX', 'BTC', 'XRP', 'BCH', 'USDT', 'BSV', 'ADA')
 
 def consulta(query, params=()):
     conn = sqlite3.connect(DBFILE)
     c = conn.cursor()
-    '''
-    'SELECT * FROM TABLA' -> [(),(), (),]
-    'SELECT * FROM TABLA VACIA ' -> []
-    'INSERT ...' -> []
-    'UPDATE ...' -> []
-    'DELETE ...' -> []
-    '''
 
     c.execute(query, params)
     conn.commit()
@@ -45,14 +39,9 @@ def consulta(query, params=()):
 @app.route('/')
 def listaIngresos():
 
-    ingresos = consulta('SELECT tipo, fecha, concepto, cantidad, id FROM movimientos;')
+    ingresos = consulta('SELECT date, time, from_currency, from_quantity, to__currency, to_quantity FROM movements;')
 
-    total = 0
-    for ingreso in ingresos:
-        total += float(ingreso['cantidad'])
-
-
-    return render_template("movementsList.html",datos=ingresos, total=total)
+    return render_template("movementsList.html", datos=ingresos)
 
 @app.route('/creaalta', methods=['GET', 'POST'])
 def nuevoIngreso():
@@ -62,28 +51,18 @@ def nuevoIngreso():
     if request.method == 'POST':
 
         if form.validate():
-            if float(form.cantidad.data) > 0:
-                form.tipo.data = "Ingreso"
-                consulta('INSERT INTO movimientos (tipo, cantidad, concepto, fecha) VALUES (?, ?, ? ,? );', 
+            consulta('INSERT INTO movements (date, time, from_currency, from_quantity, to_currency, to_quantity) VALUES (?, ?, ? ,? ,?, ? );', 
                         (   
-                            form.tipo.data,
-                            form.cantidad.data,
-                            form.concepto.data,
-                            form.fecha.data
+                            form.date.data,
+                            form.time.data,
+                            form.from_currency.data,
+                            form.from_quantity.data,
+                            form.to_currency.data,
+                            fotm.to_quantity.data
                         )
                     )
-                return redirect(url_for('listaIngresos'))
-            elif float(form.cantidad.data) < 0:
-                form.tipo.data = "Gasto"
-                consulta('INSERT INTO movimientos (tipo, cantidad, concepto, fecha) VALUES (?, ?, ? ,? );', 
-                        (   
-                            form.tipo.data,
-                            form.cantidad.data,
-                            form.concepto.data,
-                            form.fecha.data
-                        )
-                    )
-                return redirect(url_for('listaIngresos'))
+            return redirect(url_for('listaIngresos'))
+            
         else:
             return render_template("alta.html", form=form)
     return render_template("alta.html", form=form)
