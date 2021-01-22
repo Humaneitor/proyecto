@@ -3,6 +3,8 @@
 {% block title %} Simulador de Criptomoneda - Compra de criptomoneda {% endblock %}
 
 {% block contenido %}
+<form action="creaalta" method="post">
+    {{ form.hidden_tag() }}
     <h1>Compra de Criptomoneda</h1>
 
     <div class="field">
@@ -22,10 +24,14 @@
     {% endfor %}
     </div>
 
+
     <div class="field">
-        {{ form.to_currency.label }}
-        {{ form.to_currency() }}
+        {{ form.to__currency.label }}
+        {{ form.to__currency() }}
     </div>
+    
+    <div class="field">
+        {{ form.submit }}
 
     <div class="field">
         {{ form.to_quantity.label }}
