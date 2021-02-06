@@ -1,68 +1,38 @@
-
 from flask_wtf import FlaskForm
-from wtforms import DateField, StringField, FloatField, SubmitField, SelectField
-from wtforms.validators import DataRequired
-import sqlite3
-from movements import app
-
-DBFILE = app.config['DBFILE']
-
-def ask(query, params=()):
-    conn = sqlite3.connect(DBFILE)
-    c = conn.cursor()
-
-    c.execute(query, params)
-    conn.commit()
-
-    filas = c.fetchall()
-    conn.close()
+from wtforms import IntegerField, DateField, StringField, FloatField, SubmitField, ValidationError
+from wtforms import validators
+from wtforms.fields.core import DecimalField, SelectField, TimeField
+from wtforms.validators import Length, InputRequired, NumberRange, DataRequired
+from datetime import date, datetime, timezone
+from movements.db_ejec import moneda_saldo_total 
 
 
-    if len(filas) == 0:
-        return filas
 
-    columnNames = []
-    for columnName in c.description:
-        columnNames.append(columnName[0])
+coin = ('EUR', 'BTC', 'ETH', 'XRP', 'LTC', 'BCH', 'USDT', 'EOS', 'BSV', 'XLM', 'ADA', 'TRX')
 
-    listaDeDiccionarios = []
+def validar_select(form, field):
+    if form.from_currency.data == form.to_currency.data:
+            raise ValidationError('Error: Monedas Iguales')
 
-    for fila in filas:
-        d = {}
-        for ix, columnName in enumerate(columnNames):
-            d[columnName] = fila[ix]
-        listaDeDiccionarios.append(d)
+def validar_saldo(form, field):
+    saldo_total = moneda_saldo_total()
+    if form.from_currency.data == 'EUR':
+        pass
+    elif field.data > saldo_total[form.from_currency.data]:
+        raise ValidationError('No tienes saldo de esta criptomoneda')
 
-    return listaDeDiccionarios
-
-
+            
 
 class MovementForm(FlaskForm):
-    disponibles = ask('SELECT to__currency FROM movements;')
-
-    listadisponibles=[]
-
-    listadisponibles.append('EUR')
-
-    for elemento in disponibles:
-        if elemento['to__currency'] not in listadisponibles:
-            listadisponibles.append(elemento['to__currency'])
-
-    print (listadisponibles)
-
-    date = StringField('Fecha')
-    time = StringField('Hora')
+    from_currency = SelectField('Moneda original que utilizas para comprar',choices = coin, validators=[validar_select])
+    from_cantidad = FloatField('Cantidad de moneda original', validators= [DataRequired(), NumberRange(min=0.00000001, max=1000000000, message= "Error: Cantidad no válida"),validar_saldo]) 
+    to_currency = SelectField('Moneda que quieres comprar', choices = coin)
+    to_cantidad = DecimalField('Cantidad que vas a comprar al cambio')
+    precio_unitario = DecimalField ('Precio Unitario')
+    calculadora = SubmitField("Calcular Operación")
+    guardar = SubmitField ('Confirmar y comprar operación')
 
 
-
-
-    #from_currency = StringField('From_Currency', validators=[DataRequired()])
-    from_currency = SelectField('Moneda origen', choices=listadisponibles, validators=[DataRequired()])
-    from_quantity = FloatField('Cantidad de moneda de origen', validators=[DataRequired()])
-    
-
-    to__currency = SelectField('Moneda destino', choices=('EUR', 'ETH', 'LTC', 'BNB', 'EOS', 'XLM', 'TRX', 'BTC', 'XRP', 'BCH', 'USDT', 'BSV', 'ADA'), validators=[DataRequired()])
-    submit = SubmitField('Calcular')
-    to_quantity = FloatField('Cantidad de moneda de destino', validators=[DataRequired()])
-
-    submit = SubmitField('Comprar')
+class Status_Form(FlaskForm): 
+    invertido = DecimalField('Euros invertidos en la compra')
+    valor_actual = DecimalField('Valor actual de tu inversión')

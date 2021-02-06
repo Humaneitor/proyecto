@@ -3,22 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css')}}">
+        <title>{% block titulo %} {% endblock %} </title>
+        
     </head>
     <body>
         <header>
-            <p>myCrypto</p>
-        </header>
-
-        <section>
-            {% block contenido %}{% endblock %}
-        </section>
-
+            <p>MyCrypto</p>
+            <div>{% block barra %}{% endblock %}</div>
+            </header>
+            <div>
+                {% block contenido %}{% endblock %}
+            </div>                              
+                
         <footer>
             &copy; 2020 - 2021. Todos los derechos reservados<br>
             Simulador de criptomonedas creado como proyecto final del Bootcamp Aprende a Programar desde Cero de <a href="https://keepcoding.io/" target="_blank">KeepCoding</a>.<br>
             Simulación ficticia, los responsables de esta página no se hará cargo de los problemas ocasionados por su uso. Confeccionado con finalidad educativa.
-        </footer>
-    </body>
+        </footer>             
+    </body> 
 </html>

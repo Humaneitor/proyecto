@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% block title %}  Simulador de Criptomoneda - Movimientos en tu cartera {% endblock %}
+
+{% block barra %} 
+<div>
+        <button class ="boton_barra", disabled = "disabled">INICIO</button>
+        <a href="/purchase"><button class ="boton_barra">COMPRA</button></a>
+        <a href="/status"><button class ="boton_barra">ESTADO</button></a>
+</div>
+{% endblock %}
+
+
+{% block contenido %}
+<h1>Movimientos en tu cartera</h1>
+        {% for mensaje in mensajes %}
+        <p class="errores_try">{{mensaje}}</p>
+        {% endfor %}
+        {% if datos|length > 0 %}
+                                <table>
+                                        <tr class="tabla_mov">
+                                                <th>Fecha</th>
+                                                <th>Hora</th>
+                                                <th>Moneda original</th>
+                                                <th>Cantidad invertida </th>
+                                                <th>Moneda comprada</th>
+                                                <th>Cantidad de moneda comprada</th>
+                                                <th>Valor unitario de la moneda comprada</th>
+                                        </tr> 
+                        {% for ingresos in datos %}
+                                <tr>
+                                        <td>{{ ingresos ['date'] }}</td>
+                                        <td>{{ ingresos ['time'] }}</td>
+                                        <td>{{ ingresos['from_currency'] }}</td>
+                                        <td>{{ ingresos['from_quantity'] }}</td>
+                                        <td>{{ ingresos['to_currency'] }}</td>
+                                        <td>{{ ingresos ['to_quantity'] }}</td>
+                                        <td>{{ ingresos ['precio'] }}</td>
+                                </tr>
+                        {% endfor %}
+                                </table>
+        {% else %}
+        <p class="sin_movimientos">No hay movimientos, haz una compra de criptomonedas, los euros son infinitos.<i class="fa fa-bitcoin fa-2x"></i> <i class="fa fa-ethereum fa-2x"></i> </p>
+        
+        {% endif %}
+{% endblock %}
