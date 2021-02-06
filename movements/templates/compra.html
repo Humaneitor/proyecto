@@ -6,7 +6,7 @@
 <div>
     <a href="/"><button class ="boton_barra">INICIO</button></a>
     <button class ="boton_barra", disabled = "disabled">COMPRA</button>
-    <a href="/status"><button class ="boton_barra">ESTADO</button> </a>
+    <a href="/estado"><button class ="boton_barra">ESTADO</button> </a>
 </div>
 {% endblock %}
 
@@ -15,7 +15,7 @@
         {% for mensaje in mensajes %}
             <p class="errores_try">{{mensaje}}</p>
         {% endfor %}
-        <form action="purchase" method="POST">  
+        <form action="compra" method="POST">  
             {{ form.hidden_tag()}}
             
             {% if vacio == True %}
@@ -31,7 +31,9 @@
                 {% endfor %}
         </div>
         <div>
+                {{form.from_cantidad.label}}
                 {{form.from_cantidad( placeholder='Cantidad moneda original') }}
+                
                 {% for error in form.from_cantidad.errors %}
             <p>
                 {{ error }}
@@ -63,12 +65,13 @@
                 {{form.to_currency(value=api_coin[2], disabled="disabled")}}
                 {{form.to_currency(value=api_coin[2], hidden="hidden")}}
         </div>
-        <div>
-                {{form.calculadora(disabled="disabled")}}
-        </div>
+        
         <div>    
                 {{form.from_cantidad.label}}
                 {{form.from_cantidad(readonly="readonly",value=api_coin[0])}}
+        </div>
+        <div>
+                {{form.calculadora(disabled="disabled")}}
         </div>
         <div>
                 {{form.to_cantidad.label}}

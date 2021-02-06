@@ -1,8 +1,7 @@
 import sqlite3
 from config import*
 from movements import app
-from datetime import date
-from datetime import datetime
+
 
 DBFILE = app.config['DBFILE'] 
 
@@ -34,8 +33,6 @@ def consulta(query, params=()):
 
 
 def monedas_activas(): 
-
-    cryto_money = ['BTC', 'ETH', 'XRP', 'LTC', 'BCH', 'USDT', 'EOS', 'BSV', 'XLM', 'ADA', 'TRX']
 
     movimientos = consulta('SELECT from_currency,from_quantity, to_currency, to_quantity  FROM movimientos;')
 
@@ -72,8 +69,19 @@ def moneda_saldo_total():
     return dic_saldo
 
 
-now = datetime.now()
-today = date.today() 
-today_2 = "{}/{}/{}".format(today.year, today.month, today.day)
-now = datetime.now() 
-time = "{}:{:02d}:{:02d}".format(now.hour, now.minute,now.second)
+
+
+
+    
+def validar_select(form, field):
+    if form.from_currency.data == form.to_currency.data:
+            raise ValidationError('Error: Monedas Iguales')
+
+def validar_saldo(form, field):
+    saldo_total = moneda_saldo_total()
+    if form.from_currency.data == 'EUR':
+        pass
+    elif field.data > saldo_total[form.from_currency.data]:
+        raise ValidationError('No tienes saldo de esta criptomoneda')
+
+            
