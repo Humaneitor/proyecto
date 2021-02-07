@@ -2,8 +2,6 @@ movements/__pycache__/
 .env
 .vscode/
 movements/data/basededatos.db
-movements/data/
-movements/data/
 config.py
 __pycache__
 venv/
