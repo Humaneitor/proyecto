@@ -73,15 +73,3 @@ def moneda_saldo_total():
 
 
     
-def validar_select(form, field):
-    if form.from_currency.data == form.to_currency.data:
-            raise ValidationError('Error: Monedas Iguales')
-
-def validar_saldo(form, field):
-    saldo_total = moneda_saldo_total()
-    if form.from_currency.data == 'EUR':
-        pass
-    elif field.data > saldo_total[form.from_currency.data]:
-        raise ValidationError('No tienes saldo de esta criptomoneda')
-
-            

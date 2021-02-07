@@ -1,0 +1,41 @@
+h1 {
+    color: darkblue;
+    text-align: center;
+    font-size: x-large
+}
+header {
+    color: darkcyan;
+    text-align: center;
+}
+.titulo {
+    color: darkgreen;
+    font-size: x-large;
+}
+footer {
+    text-align: center;
+    border: 1px solid grey;
+    font-size: small;
+    }
+
+table {
+    width: 100%;
+}
+th, td {
+    width: 14%;
+    text-align: center;
+    border: 2px solid grey;
+
+}
+
+div {
+    position: vertical-align: top;
+    
+}
+
+.f1{
+    border: 1px solid grey;
+}
+
+.f2{
+    border: 1px solid grey;
+}

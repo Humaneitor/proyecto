@@ -4,9 +4,9 @@
 
 {% block barra %} 
 <div>
-    <a href="/"><button class ="boton_barra">INICIO</button></a>
-    <button class ="boton_barra", disabled = "disabled">COMPRA</button>
-    <a href="/estado"><button class ="boton_barra">ESTADO</button> </a>
+    <a href="/"><button>INICIO</button></a>
+    <button, disabled = "disabled">COMPRA</button>
+    <a href="/estado"><button>ESTADO</button> </a>
 </div>
 {% endblock %}
 
@@ -20,9 +20,12 @@
             
             {% if vacio == True %}
         <div> 
-                {{form.from_currency.label}} 
+                {{form.from_currency.label}}<br>
                 {{form.from_currency}}
-                {{form.to_currency.label}} 
+        </div>
+        <div> 
+
+                {{form.to_currency.label}}<br>
                 {{form.to_currency}}
                 {% for error in form.from_currency.errors %}
             <p>
@@ -31,7 +34,7 @@
                 {% endfor %}
         </div>
         <div>
-                {{form.from_cantidad.label}}
+                {{form.from_cantidad.label}}<br>
                 {{form.from_cantidad( placeholder='Cantidad moneda original') }}
                 
                 {% for error in form.from_cantidad.errors %}
@@ -44,11 +47,11 @@
                 {{form.calculadora}}
         </div>
         <div>
-                {{form.to_cantidad.label}}
+                {{form.to_cantidad.label}}<br>
                 {{form.to_cantidad(disabled="disabled")}}  
         </div>
         <div>
-                {{form.precio_unitario.label}}
+                {{form.precio_unitario.label}}<br>
                 {{form.precio_unitario(disabled="disabled")}}
         </div>
         <div>
@@ -56,29 +59,29 @@
         </div>
                 {% else %}
         <div> 
-                {{form.from_currency.label}} 
+                {{form.from_currency.label}}<br>
                 {{form.from_currency(value=api_coin[1], disabled = "disabled")}}
                 {{form.from_currency(value=api_coin[1], hidden="hidden")}}
         </div>
         <div> 
-                {{form.to_currency.label}} 
+                {{form.to_currency.label}} <br>
                 {{form.to_currency(value=api_coin[2], disabled="disabled")}}
                 {{form.to_currency(value=api_coin[2], hidden="hidden")}}
         </div>
         
         <div>    
-                {{form.from_cantidad.label}}
+                {{form.from_cantidad.label}}<br>
                 {{form.from_cantidad(readonly="readonly",value=api_coin[0])}}
         </div>
         <div>
                 {{form.calculadora(disabled="disabled")}}
         </div>
         <div>
-                {{form.to_cantidad.label}}
+                {{form.to_cantidad.label}}<br>
                 {{form.to_cantidad(readonly="readonly",value=api_coin[3])}}
         </div>
         <div>
-                {{form.precio_unitario.label}}
+                {{form.precio_unitario.label}}<br>
                 {{form.precio_unitario(readonly="readonly",value=api_coin[4])}}
         </div>
         <div>

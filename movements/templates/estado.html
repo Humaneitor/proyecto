@@ -3,23 +3,23 @@
 {% block titulo %}Simulador de Criptomoneda - Estado de tu inversión en criptomonedas{% endblock %}
 {% block barra %}
 <div>
-        <a href="/"><button class ="boton_barra">INICIO</button></a>
-        <a href="/compra"> <button class ="boton_barra">COMPRA</button></a>
-        <button class ="boton_barra", disabled = "disabled">ESTADO</button>
+        <a href="/"><button>INICIO</button></a>
+        <a href="/compra"> <button>COMPRA</button></a>
+        <button, disabled = "disabled">ESTADO</button>
 </div>
 {% endblock %}
 
 {% block contenido %}
 <h1>Estado de tu inversión en criptomonedas</h1>
 {% for mensaje in mensajes %}
-        <p class="errores_try">{{mensaje}}</p>
+        <p>{{mensaje}}</p>
         {% endfor %}
         <div>
-                {{form.invertido.label (class ="status_form")}}
+                {{form.invertido.label (class ="status_form")}}<br>
                 {{form.invertido(value= valor_invertido,disabled="disabled")}}
         </div>
         <div>
-                {{form.valor_actual.label(class ="status_form")}}
+                {{form.valor_actual.label(class ="status_form")}}<br>
                 {{form.valor_actual(value=valor_actual,disabled="disabled") }}
         </div>
 

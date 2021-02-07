@@ -39,6 +39,7 @@ def listaIngresos():
 
 @app.route('/compra', methods=['GET', 'POST'])
 def nuevaCompra():
+    
 
     form = MovementForm() 
     mensajes = []
